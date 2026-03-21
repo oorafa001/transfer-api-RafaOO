@@ -17,6 +17,7 @@ type TransfersRepository interface {
 	GetByID(ctx context.Context, id string) (models.Transfer, error)
 	Update(ctx context.Context, transfer models.Transfer) error
 	Delete(ctx context.Context, id string) error
+	GetByUserId(ctx context.Context, userId string) (models.Transfer, error)
 }
 
 type TransfersService struct {
@@ -84,4 +85,12 @@ func (s *TransfersService) Delete(ctx context.Context, id string) error {
 		return fmt.Errorf("error deleting transfer %s from repository: %w", id, err)
 	}
 	return nil
+}
+
+func (s *TransfersService) GetByUserId(ctx context.Context, userId string) (models.Transfer, error) {
+	transfer, err := s.transfersRepo.GetByUserId(ctx, userId)
+	if err != nil {
+		return models.Transfer{}, fmt.Errorf("error getting transfer for user %s from repository: %w", userId, err)
+	}
+	return transfer, nil
 }
