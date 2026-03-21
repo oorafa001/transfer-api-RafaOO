@@ -11,6 +11,17 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: root
     volumes:
       - mongo_data:/data/db
+  mysql:
+    image: mysql:8.0
+    container_name: transfers-mysql
+    restart: always
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: transfers-db
+    volumes:
+      - mysql_data:/data/db
 
   app:
     image: transfers-api:0.1.0
