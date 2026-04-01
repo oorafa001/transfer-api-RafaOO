@@ -21,14 +21,16 @@ type TransfersRepository interface {
 }
 
 type TransfersService struct {
-	businessCfg   config.BusinessConfig
-	transfersRepo TransfersRepository
+	businessCfg    config.BusinessConfig
+	transfersRepo  TransfersRepository
+	transfersCache TransfersRepository
 }
 
-func NewTransfersService(businessCfg config.BusinessConfig, transfersRepo TransfersRepository) *TransfersService {
+func NewTransfersService(businessCfg config.BusinessConfig, transfersRepo TransfersRepository, transfersCache TransfersRepository) *TransfersService {
 	return &TransfersService{
-		businessCfg:   businessCfg,
-		transfersRepo: transfersRepo,
+		businessCfg:    businessCfg,
+		transfersRepo:  transfersRepo,
+		transfersCache: transfersCache,
 	}
 }
 

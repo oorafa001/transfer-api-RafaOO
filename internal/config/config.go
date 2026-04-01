@@ -9,9 +9,11 @@ import (
 )
 
 type Config struct {
-	Business      BusinessConfig `json:"business"`
-	MongoDBConfig MongoDB        `json:"mongodb"`
-	MySQLConfig   MySQL          `json:"mysql"`
+	Business        BusinessConfig `json:"business"`
+	MongoDBConfig   MongoDB        `json:"mongodb"`
+	MySQLConfig     MySQL          `json:"mysql"`
+	MemcachedConfig Memcached
+	CCacheConfig    CCache `json:"ccache"`
 }
 
 type BusinessConfig struct {
@@ -34,6 +36,18 @@ type MySQL struct {
 	Username string `env:"MYSQL_USERNAME" envDefault:"root" json:"username"`
 	Password string `env:"MYSQL_PASSWORD" envDefault:"root" json:"password"`
 	Database string `env:"MYSQL_DATABASE" envDefault:"transfers-db" json:"database"`
+}
+
+type Memcached struct {
+	Hostname   string `env:"MEMCACHED_HOSTNAME" envDefault:"memcached" json:"hostname"`
+	Port       int    `env:"MEMCACHED_PORT" envDefault:"11211" json:"port"`
+	TTLSeconds int    `env:"MEMCACHED_TTL_SECONDS" envDefault:"60" json:"ttl_seconds"`
+}
+
+type CCache struct {
+	MaxSize        int `env:"CCACHE_MAX_SIZE" envDefault:"5000" json:"max_size"`
+	PercentToPrune int `env:"CCACHE_PERCENT_TO_PRUNE" envDefault:"10" json:"percent_to_prune"`
+	TTLSeconds     int `env:"CCACHE_TTL_SECONDS" envDefault:"60" json:"ttl_seconds"`
 }
 
 func ParseFromEnv() *Config {
