@@ -54,6 +54,11 @@ func (s *TransfersService) Create(ctx context.Context, transfer models.Transfer)
 	if err != nil {
 		return "", fmt.Errorf("error creating transfer in repository: %w", err)
 	}
+
+	if _, err := s.transfersCache.Create(ctx, transfer); err != nil {
+		return "", fmt.Errorf("error caching transfer with ID %s: %v", id, err)
+	}
+
 	return id, nil
 }
 

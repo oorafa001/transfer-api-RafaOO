@@ -59,8 +59,8 @@ func (r *TransfersCCacheRepo) GetAll(ctx context.Context) ([]models.Transfer, er
 	return nil, fmt.Errorf("GetAll not implemented for ccache repository")
 }
 
-func (r *TransfersCCacheRepo) GetByUserId(ctx context.Context, senderID string) ([]models.Transfer, error) {
-	return nil, fmt.Errorf("GetBySenderID not implemented for ccache repository")
+func (r *TransfersCCacheRepo) GetByUserId(ctx context.Context, senderID string) (models.Transfer, error) {
+	return models.Transfer{}, fmt.Errorf("GetBySenderID not implemented for ccache repository")
 }
 
 func (r *TransfersCCacheRepo) GetByReceiverID(ctx context.Context, receiverID string) ([]models.Transfer, error) {
