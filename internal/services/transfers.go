@@ -20,17 +20,23 @@ type TransfersRepository interface {
 	GetByUserId(ctx context.Context, userId string) (models.Transfer, error)
 }
 
-type TransfersService struct {
-	businessCfg    config.BusinessConfig
-	transfersRepo  TransfersRepository
-	transfersCache TransfersRepository
+type TransfersPublisher interface {
+	Publish(operation string, transferID string) error
 }
 
-func NewTransfersService(businessCfg config.BusinessConfig, transfersRepo TransfersRepository, transfersCache TransfersRepository) *TransfersService {
+type TransfersService struct {
+	businessCfg        config.BusinessConfig
+	transfersRepo      TransfersRepository
+	transfersCache     TransfersRepository
+	transfersPublisher TransfersPublisher
+}
+
+func NewTransfersService(businessCfg config.BusinessConfig, transfersRepo TransfersRepository, transfersCache TransfersRepository, transfersPublisher TransfersPublisher) *TransfersService {
 	return &TransfersService{
-		businessCfg:    businessCfg,
-		transfersRepo:  transfersRepo,
-		transfersCache: transfersCache,
+		businessCfg:        businessCfg,
+		transfersRepo:      transfersRepo,
+		transfersCache:     transfersCache,
+		transfersPublisher: transfersPublisher,
 	}
 }
 

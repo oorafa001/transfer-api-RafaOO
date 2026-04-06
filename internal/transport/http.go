@@ -22,6 +22,10 @@ type HTTPServer struct {
 	transfersHandler TransfersHandler
 }
 
+type MqHandler interface {
+	Read(ctx *gin.Context)
+}
+
 func NewHTTPServer(transfersHandler TransfersHandler) *HTTPServer {
 	engine := gin.Default()
 	engine.Use(handlers.AllowCORS)
